@@ -41,9 +41,8 @@ void setup() {
   display.clearDisplay();
 }
 
-char first_input[5] = "" , second_input[5] = "";
-short counter = 0;
-int max_char = 0;
+char first_input[5] = "", second_input[5] = "";
+byte counter = 0, max_char = 0;
 char curr_input = 'n';
 
 void loop() {
@@ -59,11 +58,11 @@ void loop() {
     /* D defines the first value and the second value */
     if (key == '#') {
       if (counter == 0) {
-        display.println("Initialize First Number!");
+        display.println("Enter First Number!");
         curr_input = 'x';
         counter++;
       } else if (counter == 1) {
-        display.println("Initialize Second Number!");
+        display.println("Enter Second Number!");
         curr_input = 'y';
         counter--;
       }
@@ -103,8 +102,34 @@ void loop() {
       max_char = 0;
       counter = 0;
       curr_input = 'n';
+      first_input[0] = '\n';
+      second_input[0] = '\n';
+    /* Division */
+    } else if (key == 'D') {
+       int x = atoi(first_input);
+       int y = atoi(second_input);
+       int reslt = x / y;
+
+       display.print(x);
+       display.print(" / ");
+       display.print(y);
+       display.print(" = ");
+       display.print(reslt);
+       max_char = 0;
+    /* Multiplication */
+    } else if (key == '*') {
+       int x = atoi(first_input);
+       int y = atoi(second_input);
+       int reslt = x * y;
+
+       display.print(x);
+       display.print(" x ");
+       display.print(y);
+       display.print(" = ");
+       display.print(reslt);
+       max_char = 0;
     /* Handle other inputs inputs */
-    } else {
+    }else {
         if (max_char < 4) {
           if (counter == 1) {
             first_input[max_char] = key;
@@ -121,6 +146,8 @@ void loop() {
           max_char = 0;
           counter = 0;
           curr_input = 'n';
+          first_input[0] = '\n';
+          second_input[0] = '\n';
         }
     }
 
