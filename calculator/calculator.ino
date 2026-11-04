@@ -3,6 +3,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <stdint.h>
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -41,9 +42,8 @@ void setup() {
   display.clearDisplay();
 }
 
-char first_input[5] = "", second_input[5] = "";
-byte max_char = 0;
-char curr_input = 'x';
+char first_input[6] = "", second_input[6] = "";
+uint8_t max_char = 0, counter = 0;
 char op = 'n';
 
 void loop() {
@@ -78,38 +78,38 @@ void loop() {
       display.print(" = ");
       display.print(reslt);
 
-     for(byte i = 0; i < 5; i++) {
+     for(byte i = 0; i < 6; i++) {
          first_input[i] = '\0';
          second_input[i] = '\0';
      }
       max_char = 0;
-      curr_input = 'x';
+      counter = 0;
       op = 'n';
     /* Addition */
     } else if (key == 'A') {
       display.print(first_input);
       display.print(" + ");
       op = '+';
-      if (curr_input == 'x') {
-        curr_input = 'y';
+      if (counter == 0) {
         max_char = 0;
+        counter++;
       }
     /* Subtraction */
     } else if (key == 'B') {
       display.print(first_input);
       display.print(" - ");
       op = '-';
-      if (curr_input == 'x') {
-        curr_input = 'y';
+      if (counter == 0) {
         max_char = 0;
+        counter++;
       }
     /* Clear Everything */
     } else if (key == 'C'){
       display.clearDisplay();
       max_char = 0;
-      curr_input = 'x';
+      counter == 0;
       op = 'n';
-      for(byte i = 0; i < 5; i++) {
+      for(byte i = 0; i < 6; i++) {
           first_input[i] = '\0';
           second_input[i] = '\0';
       }
@@ -118,25 +118,25 @@ void loop() {
       display.print(first_input);
       display.print(" / ");
       op = '/';
-      if (curr_input == 'x') {
-        curr_input = 'y';
+      if (counter == 0) {
         max_char = 0;
+        counter++;
       }
     /* Multiplication */
     } else if (key == '*') {
       display.print(first_input);
       display.print(" * ");
       op = '*';
-      if (curr_input == 'x') {
-        curr_input = 'y';
+      if (counter == 0) {
         max_char = 0;
+        counter++;
       }
     }else {
-      if (max_char < 4) {
-        if (curr_input == 'x') {
+      if (max_char < 5) {
+        if (counter == 0) {
           first_input[max_char] = key;
           display.print(first_input);
-        } else if (curr_input == 'y') {
+        } else {
           second_input[max_char] = key;
           display.print(first_input);
           display.print(" ");
@@ -146,13 +146,14 @@ void loop() {
         }
         max_char++;
         } else {
-          display.println("Numbers can't exceed 4 digits");
-          max_char = 0;
-          curr_input = 'x';
-          op = 'n';
-          for(byte i = 0; i < 5; i++) {
-              first_input[i] = '\0';
-              second_input[i] = '\0';
+          if (counter == 0) {
+            display.print(first_input);
+          }else {
+            display.print(first_input);
+            display.print(" ");
+            display.print(op);
+            display.print(" ");
+            display.print(second_input);
           }
         }
     }
