@@ -42,8 +42,9 @@ void setup() {
 }
 
 char first_input[5] = "", second_input[5] = "";
-byte counter = 0, max_char = 0;
-char curr_input = 'n';
+byte max_char = 0;
+char curr_input = 'x';
+char op = 'n';
 
 void loop() {
   char key = keypad.getKey();
@@ -52,102 +53,101 @@ void loop() {
 
   if (key) {
     display.setTextColor(WHITE);
-    display.setTextSize(1);
+    display.setTextSize(2);
     display.setCursor(0, 0);
 
-    /* D defines the first value and the second value */
+    /* # => equal */
     if (key == '#') {
-      if (counter == 0) {
-        display.println("Enter First Number!");
-        curr_input = 'x';
-        counter++;
-      } else if (counter == 1) {
-        display.println("Enter Second Number!");
-        curr_input = 'y';
-        counter--;
+
+      float x = atof(first_input);
+      float y = atof(second_input);
+      float reslt = 0;
+
+      switch (op) {
+      case '+': reslt = x + y; break;
+      case '-': reslt = x - y; break;
+      case '/': reslt = x / y; break;
+      case '*': reslt = x * y; break;
       }
+
+      display.print(first_input);
+      display.print(" ");
+      display.print(op);
+      display.print(" ");
+      display.print(second_input);
+      display.print(" = ");
+      display.print(reslt);
+
+      memset(first_input, 0, sizeof(first_input));
+      memset(second_input, 0, sizeof(second_input));
       max_char = 0;
+      curr_input = 'x';
+      op = 'n';
     /* Addition */
     } else if (key == 'A') {
-       int x = atoi(first_input);
-       int y = atoi(second_input);
-       int reslt = x + y;
-
-       display.print(x);
-       display.print(" + ");
-       display.print(y);
-       display.print(" = ");
-       display.print(reslt);
-       max_char = 0;
+      display.print(first_input);
+      display.print(" + ");
+      op = '+';
+      if (curr_input == 'x') {
+        curr_input = 'y';
+        max_char = 0;
+      }
     /* Subtraction */
     } else if (key == 'B') {
-       int x = atoi(first_input);
-       int y = atoi(second_input);
-       int reslt = x - y;
-
-       display.print(x);
-       display.print(" - ");
-       display.print(y);
-       display.print(" = ");
-       display.print(reslt);
-       max_char = 0;
-    /* C to clear everything and show available operations*/
+      display.print(first_input);
+      display.print(" - ");
+      op = '-';
+      if (curr_input == 'x') {
+        curr_input = 'y';
+        max_char = 0;
+      }
+    /* Clear Everything */
     } else if (key == 'C'){
-      display.println("A => Addition");
-      display.println("B => Subtraction");
-      display.println("* => Multiplication");
-      display.println("D => Division");
-      display.println("C => Clear");
-      display.println("# => Initialize");
+      display.clearDisplay();
       max_char = 0;
-      counter = 0;
-      curr_input = 'n';
-      first_input[0] = '\n';
-      second_input[0] = '\n';
+      curr_input = 'x';
+      memset(first_input, 0, sizeof(first_input));
+      memset(second_input, 0, sizeof(second_input));
+      op = 'n';
     /* Division */
     } else if (key == 'D') {
-       int x = atoi(first_input);
-       int y = atoi(second_input);
-       int reslt = x / y;
-
-       display.print(x);
-       display.print(" / ");
-       display.print(y);
-       display.print(" = ");
-       display.print(reslt);
-       max_char = 0;
+      display.print(first_input);
+      display.print(" / ");
+      op = '/';
+      if (curr_input == 'x') {
+        curr_input = 'y';
+        max_char = 0;
+      }
     /* Multiplication */
     } else if (key == '*') {
-       int x = atoi(first_input);
-       int y = atoi(second_input);
-       int reslt = x * y;
-
-       display.print(x);
-       display.print(" x ");
-       display.print(y);
-       display.print(" = ");
-       display.print(reslt);
-       max_char = 0;
-    /* Handle other inputs inputs */
+      display.print(first_input);
+      display.print(" * ");
+      op = '*';
+      if (curr_input == 'x') {
+        curr_input = 'y';
+        max_char = 0;
+      }
     }else {
-        if (max_char < 4) {
-          if (counter == 1) {
-            first_input[max_char] = key;
-            display.println("First Number: ");
-            display.println(first_input);
-          } else if (counter == 0) {
-            second_input[max_char] = key;
-            display.println("Second Number: ");
-            display.println(second_input);
-          }
-          max_char++;
+      if (max_char < 4) {
+        if (curr_input == 'x') {
+          first_input[max_char] = key;
+          display.print(first_input);
+        } else if (curr_input == 'y') {
+          second_input[max_char] = key;
+          display.print(first_input);
+          display.print(" ");
+          display.print(op);
+          display.print(" ");
+          display.print(second_input);
+        }
+        max_char++;
         } else {
           display.println("Numbers can't exceed 4 digits");
           max_char = 0;
-          counter = 0;
-          curr_input = 'n';
-          first_input[0] = '\n';
-          second_input[0] = '\n';
+          curr_input = 'x';
+          op = 'n';
+          memset(first_input, 0, sizeof(first_input));
+          memset(second_input, 0, sizeof(second_input));
         }
     }
 
