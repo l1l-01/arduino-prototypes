@@ -78,8 +78,10 @@ void loop() {
       display.print(" = ");
       display.print(reslt);
 
-      memset(first_input, 0, sizeof(first_input));
-      memset(second_input, 0, sizeof(second_input));
+     for(byte i = 0; i < 5; i++) {
+         first_input[i] = '\0';
+         second_input[i] = '\0';
+     }
       max_char = 0;
       curr_input = 'x';
       op = 'n';
@@ -106,9 +108,11 @@ void loop() {
       display.clearDisplay();
       max_char = 0;
       curr_input = 'x';
-      memset(first_input, 0, sizeof(first_input));
-      memset(second_input, 0, sizeof(second_input));
       op = 'n';
+      for(byte i = 0; i < 5; i++) {
+          first_input[i] = '\0';
+          second_input[i] = '\0';
+      }
     /* Division */
     } else if (key == 'D') {
       display.print(first_input);
@@ -146,8 +150,10 @@ void loop() {
           max_char = 0;
           curr_input = 'x';
           op = 'n';
-          memset(first_input, 0, sizeof(first_input));
-          memset(second_input, 0, sizeof(second_input));
+          for(byte i = 0; i < 5; i++) {
+              first_input[i] = '\0';
+              second_input[i] = '\0';
+          }
         }
     }
 
