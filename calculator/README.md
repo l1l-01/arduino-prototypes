@@ -1,6 +1,6 @@
 # Arduino Calculator with 4x4 Keypad and OLED Display
 
-### Desciption
+### Description
 A simple calculator built using an Arduino Uno R4 Minima. It takes user input via a 4x4 matrix keypad and displays the operands, operators, and calculation results on a 0.96" I2C OLED display.
 
 ### Components Used
