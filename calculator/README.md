@@ -9,8 +9,8 @@ A simple calculator built using an Arduino Uno R4 Minima. It takes user input vi
 - Output: 0.96" I2C OLED Display 128x64 (SSD1306)
 
 ### Wiring / Connections
-- 4x4 Matrix Keypad to Arduino Uno R4 Minima
-| OLED Pin | Arduino Pin |
+#### 4x4 Matrix Keypad to Arduino Uno R4 Minima
+| Keypad Pin | Arduino Pin |
 | --- | --- | 
 | Row 1 | 9 |
 | Row 2 | 8 |
@@ -21,13 +21,13 @@ A simple calculator built using an Arduino Uno R4 Minima. It takes user input vi
 | Column 3 | 3 |
 | Column 4 | 2 |
 
-- OLED Display (I2C) to Arduino Uno R4 Minima
-Keypad Pin | Arduino Pin |
---- | --- | 
-VCC\VDD | 5V (or 3.3V depending on your module) |
-GND | GND |
-SCL\SCK | Pin A5 |
-SDA | Pin A4 |
+#### OLED Display (I2C) to Arduino Uno R4 Minima
+| OLED Pin | Arduino Pin |
+| --- | --- | 
+| VCC or VDD | 5V (or 3.3V depending on your module) |
+| GND | GND |
+| SCL or SCK| Pin A5 |
+| SDA | Pin A4 |
 
 ### Required Libraries
 - DIYables_Keypad
