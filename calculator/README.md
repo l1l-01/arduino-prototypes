@@ -37,11 +37,13 @@ A simple calculator built using an Arduino Uno R4 Minima. It takes user input vi
 ### How to Use
 - Numbers (0-9): Type the first number (up to 5 digits).
 - Operators:
-| Key| Operation |
+
+| Key | Operation |
 | --- | --- |
 | A | Addition (+) |
 | B | Subtraction (-) |
 | * | Multiplication (*) |
 | D | Division (/) |
+
 - Equals: Press # to calculate and display the result.
 - Clear: Press C to clear the screen and reset the calculator for a new calculation.
