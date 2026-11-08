@@ -56,12 +56,10 @@ void loop() {
     display.setTextSize(2);
     display.setCursor(0, 0);
 
-    /* # => equal */
     if (key == '#') {
-
-      float x = atof(first_input);
-      float y = atof(second_input);
-      float reslt = 0;
+      int x = atof(first_input);
+      int y = atof(second_input);
+      int reslt = 0;
 
       switch (op) {
       case '+': reslt = x + y; break;
@@ -76,12 +74,17 @@ void loop() {
       display.print(" ");
       display.print(second_input);
       display.print(" = ");
-      display.print(reslt);
+      display.println(reslt);
 
-     for(byte i = 0; i < 6; i++) {
+      /* Clear Inputs */
+      for(byte i = 0; i < 6; i++) {
          first_input[i] = '\0';
          second_input[i] = '\0';
-     }
+      }
+
+      /* Use the result as the first input for another operation */
+      snprintf(first_input,sizeof(first_input),"%d",reslt);
+
       max_char = 0;
       counter = 0;
       op = 'n';
@@ -132,6 +135,7 @@ void loop() {
         counter++;
       }
     }else {
+      /* Store inputs */
       if (max_char < 5) {
         if (counter == 0) {
           first_input[max_char] = key;
@@ -145,6 +149,8 @@ void loop() {
           display.print(second_input);
         }
         max_char++;
+
+      /* Stop reading input after the maximum character count has reached 5 */
         } else {
           if (counter == 0) {
             display.print(first_input);
