@@ -1,14 +1,16 @@
-# Arduino Calculator with 4x4 Keypad and OLED Display
+# Arduino Calculator with 4x4 Keypad, OLED Display, and Audible Feedback
 
 ### Description
-A simple calculator built using an Arduino Uno R4 Minima. It takes user input via a 4x4 matrix keypad and displays the operands, operators, and calculation results on a 0.96" I2C OLED display.
+A simple calculator built using an Arduino Uno R4 Minima. It takes user input via a 4x4 matrix keypad, displays the operands, operators, and calculation results on a 0.96" I2C OLED display, and provides audible keypress feedback via a buzzer.
 
 ### Components Used
 - Microcontroller: Arduino Uno R4 Minima
 - Input: 4x4 Matrix Keypad
-- Output: 0.96" I2C OLED Display 128x64 (SSD1306)
+- Output (Visual): 0.96" I2C OLED Display 128x64 (SSD1306)
+- Output (Audible): Passive or Active Buzzer (5V)
 
 ### Wiring / Connections
+
 #### 4x4 Matrix Keypad to Arduino Uno R4 Minima
 | Keypad Pin | Arduino Pin |
 | --- | --- | 
@@ -29,14 +31,20 @@ A simple calculator built using an Arduino Uno R4 Minima. It takes user input vi
 | SCL or SCK| Pin A5 |
 | SDA | Pin A4 |
 
+#### Buzzer to Arduino Uno R4 Minima
+| Buzzer Pin | Arduino Pin |
+| --- | --- | 
+| Positive (+) | Pin 11 |
+| Negative (-) | GND |
+
 ### Required Libraries
-- DIYables_Keypad
-- Adafruit SSD1306
-- Adafruit GFX Library
+- `DIYables_Keypad`
+- `Adafruit SSD1306`
+- `Adafruit GFX Library`
 
 ### How to Use
-- Numbers (0-9): Type the first number (up to 5 digits).
-- Operators:
+- **Numbers (0-9)**: Type the first number (up to 5 digits).
+- **Operators**:
 
 | Key | Operation |
 | --- | --- |
@@ -45,5 +53,6 @@ A simple calculator built using an Arduino Uno R4 Minima. It takes user input vi
 | * | Multiplication (*) |
 | D | Division (/) |
 
-- Equals: Press # to calculate and display the result.
-- Clear: Press C to clear the screen and reset the calculator for a new calculation.
+- **Equals**: Press `#` to calculate and display the result. The result is automatically stored as the first input for chained calculations.
+- **Clear**: Press `C` to clear the screen, reset the state variables, and prepare for a new calculation.
+- **Audible Feedback**: A short 2000Hz beep (100ms duration) is generated on every valid keypress to confirm input registration.
