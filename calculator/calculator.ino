@@ -10,6 +10,10 @@
 #define OLED_RESET -1
 #define SCREEN_ADDRESS 0x3C
 
+
+// Buzzer
+const uint8_t BUZZER_PIN = 11;
+
 //four rows
 const int ROW_NUM = 4;
 //four columns
@@ -34,12 +38,14 @@ Adafruit_SSD1306 display(SCREEN_WIDTH,SCREEN_HEIGHT, &Wire, OLED_RESET);
 void setup() {
   Serial.begin(9600);
   Serial.begin(115200);
+  pinMode(BUZZER_PIN, OUTPUT);
 
     if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;);
   }
   display.clearDisplay();
+  noTone(BUZZER_PIN);
 }
 
 char first_input[6] = "", second_input[6] = "";
@@ -55,6 +61,7 @@ void loop() {
     display.setTextColor(WHITE);
     display.setTextSize(2);
     display.setCursor(0, 0);
+    tone(BUZZER_PIN, 2000, 200);
 
     if (key == '#') {
       int x = atof(first_input);
@@ -62,19 +69,29 @@ void loop() {
       int reslt = 0;
 
       switch (op) {
-      case '+': reslt = x + y; break;
-      case '-': reslt = x - y; break;
-      case '/': reslt = x / y; break;
-      case '*': reslt = x * y; break;
+          case '+': reslt = x + y; break;
+          case '-': reslt = x - y; break;
+          case '/': reslt = x / y; break;
+          case '*': reslt = x * y; break;
       }
 
-      display.print(first_input);
-      display.print(" ");
-      display.print(op);
-      display.print(" ");
-      display.print(second_input);
-      display.print(" = ");
-      display.println(reslt);
+      if (op == 'n') {
+          display.print(first_input);
+          display.print(" ");
+          display.print("?");
+          display.print(" ");
+          display.print(second_input);
+          display.print(" = ");
+          display.println("??");
+      }else {
+          display.print(first_input);
+          display.print(" ");
+          display.print(op);
+          display.print(" ");
+          display.print(second_input);
+          display.print(" = ");
+          display.println(reslt);
+      }
 
       /* Clear Inputs */
       for(byte i = 0; i < 6; i++) {
@@ -128,7 +145,7 @@ void loop() {
     /* Multiplication */
     } else if (key == '*') {
       display.print(first_input);
-      display.print(" * ");
+      display.print(" x ");
       op = '*';
       if (counter == 0) {
         max_char = 0;
@@ -165,6 +182,5 @@ void loop() {
     }
 
     display.display();
-
   }
 }
